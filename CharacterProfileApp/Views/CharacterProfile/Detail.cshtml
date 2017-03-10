@@ -1,0 +1,25 @@
+﻿
+@{
+    ViewBag.Title = "CharacterProfileDetailView";
+    var characterName = "Bob";
+    var decription = "Bob is a wonderful human being.";
+    var stats = new String[]
+    {
+        "Strength: 5",
+        "Intelligence: 1",
+        "Agility: 4"
+    };
+}
+
+<h2>@characterName</h2>
+<p>@decription</p>
+<h3>@(@characterName)'s Stats</h3>
+
+<ul>
+    @foreach(var stat in stats)
+    {
+        <li>@stat</li>
+    }
+</ul>
+
+
