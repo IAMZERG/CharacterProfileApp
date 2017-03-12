@@ -12,6 +12,7 @@ namespace CharacterProfileApp.Models
         public List<Stat> Stats { get; set; }
         public List<Alias> Aliases { get; set; }
         public List<Posession> Posessions { get; set; }
+        public string Description { get; set; }
 
 
     }
