@@ -9,16 +9,22 @@ namespace CharacterProfileApp.Controllers
 {
     public class CharacterProfileController : Controller
     {
+        private CharacterProfileRepository _characterProfileRepository = new CharacterProfileRepository();
+
         // GET: CharacterProfile
         public ActionResult Index()
         {
-            return View();
+            var charProfileList = _characterProfileRepository.GetCharacterProfiles();
+            return View(charProfileList);
         }
 
-        public ActionResult Detail()
+        public ActionResult Detail(int? id)
         {
-            var charProfile = new CharacterProfileRepository();
-            var characterProfile = charProfile.GetCharacterProfile();
+            if(id == null || id >= _characterProfileRepository.GetCharacterProfiles().Length)
+            {
+                return HttpNotFound();
+            }
+            var characterProfile = _characterProfileRepository.GetCharacterProfile((int)id);
             
             return View(characterProfile);
 

@@ -1,0 +1,16 @@
+﻿@model CharacterProfileApp.Models.CharacterProfile[]
+@{
+    ViewBag.Title = "View";
+}
+
+<h2>Character Profiles</h2>
+<div class="row">
+@foreach(var charProfile in Model)
+{
+    <div class="col-md-6">
+        <h4>@Html.ActionLink(charProfile.Name, "Detail", new { Id = charProfile.Id })</h4>
+        <p>@charProfile.Description</p>
+    </div>
+}
+</div>
+
