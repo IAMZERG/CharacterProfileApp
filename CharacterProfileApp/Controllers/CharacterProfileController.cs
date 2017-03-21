@@ -20,7 +20,7 @@ namespace CharacterProfileApp.Controllers
 
         public ActionResult Detail(int? id)
         {
-            if(id == null || id >= _characterProfileRepository.GetCharacterProfiles().Length)
+            if(id == null || id >= _characterProfileRepository.GetCharacterProfiles().Count)
             {
                 return HttpNotFound();
             }
@@ -28,6 +28,20 @@ namespace CharacterProfileApp.Controllers
             
             return View(characterProfile);
 
+        }
+
+        [ActionName("New")]
+        [HttpPost]
+        public ActionResult NewCharacterProfile(string name, string description) //values in form
+        {
+            ViewBag.Name = name; //assigning values to ViewBag to fill the form.
+            ViewBag.Description = description;
+            _characterProfileRepository.AddCharacterProfile(new Models.CharacterProfile { Name = name, Description = description });
+            return View();
+        }
+        public ActionResult New()
+        {
+            return View();
         }
     }
 }

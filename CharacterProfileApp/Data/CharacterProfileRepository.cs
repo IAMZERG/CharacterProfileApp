@@ -8,7 +8,7 @@ namespace CharacterProfileApp.Data
 {
     public class CharacterProfileRepository
     {
-        private static CharacterProfile[] _characterProfiles = new CharacterProfile[]
+        private static List<CharacterProfile> _characterProfiles = new List<CharacterProfile>
         {
 
             new CharacterProfile()
@@ -93,7 +93,7 @@ namespace CharacterProfileApp.Data
             }
         };
 
-        public CharacterProfile[] GetCharacterProfiles()
+        public List<CharacterProfile> GetCharacterProfiles()
         {
             return _characterProfiles;
         }
@@ -101,14 +101,28 @@ namespace CharacterProfileApp.Data
         public CharacterProfile GetCharacterProfile(int id)
         {
 
-            if (id < _characterProfiles.Length)
+            if (id < _characterProfiles.Count)
             {
-                return _characterProfiles[id];
+                return _characterProfiles.Find(cp => cp.Id == id);
             }
             else
             {
                 return new CharacterProfile { Name = "The resource you are looking for is unavailable." };
 
+            }
+        }
+
+        public string AddCharacterProfile(CharacterProfile charP)
+        {
+
+            if(_characterProfiles.FirstOrDefault(cp => cp.Name == charP.Name) != null)
+            {
+                return "Failed to add character profile.  Character with name already exists.";
+            }
+            else
+            {
+                _characterProfiles.Add(charP);
+                return "Successfully added character profile.";
             }
         }
     }
