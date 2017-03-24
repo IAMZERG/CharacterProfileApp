@@ -20,7 +20,7 @@ namespace CharacterProfileApp.Controllers
 
         public ActionResult Detail(int? id)
         {
-            if(id == null || id >= _characterProfileRepository.GetCharacterProfiles().Count)
+            if(id == null || id >= _characterProfileRepository.GetCharacterProfiles().Count || id < 0)
             {
                 return HttpNotFound();
             }
@@ -34,7 +34,7 @@ namespace CharacterProfileApp.Controllers
         [HttpPost]
         public ActionResult NewCharacterProfile(string name, string description) //values in form
         {
-            ViewBag.Name = name; //assigning values to ViewBag to fill the form.
+            ViewBag.Name = name; //assigning values to ViewBag to re-fill the form.
             ViewBag.Description = description;
             _characterProfileRepository.AddCharacterProfile(new Models.CharacterProfile { Name = name, Description = description });
             return View();
@@ -42,6 +42,17 @@ namespace CharacterProfileApp.Controllers
         public ActionResult New()
         {
             return View();
+        }
+    
+        public ActionResult Edit(int? id) //values in form... TODO: Update with other model attributes?
+        {
+            if (id == null || id >= _characterProfileRepository.GetCharacterProfiles().Count || id < 0)
+            {
+                return HttpNotFound();
+            }
+            var characterProfile = _characterProfileRepository.GetCharacterProfile((int)id);
+
+            return View(characterProfile);
         }
     }
 }
