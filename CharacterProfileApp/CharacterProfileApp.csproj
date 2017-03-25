@@ -275,6 +275,7 @@
     <Content Include="Views\CharacterProfile\Index.cshtml" />
     <Content Include="Views\CharacterProfile\New.cshtml" />
     <Content Include="Views\CharacterProfile\Edit.cshtml" />
+    <Content Include="Views\CharacterProfile\Delete.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

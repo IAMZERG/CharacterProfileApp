@@ -16,4 +16,6 @@ namespace CharacterProfileApp.Models
 
 
     }
+    //TODO: overload Equals operator?
+
 }

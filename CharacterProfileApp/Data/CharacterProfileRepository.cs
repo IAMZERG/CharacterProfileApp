@@ -117,13 +117,31 @@ namespace CharacterProfileApp.Data
 
             if(_characterProfiles.FirstOrDefault(cp => cp.Name == charP.Name) != null)
             {
-                return "Failed to add character profile.  Character with name already exists.";
+                return "Failed to add character profile.  Character with that name already exists.";
             }
             else
             {
                 _characterProfiles.Add(charP);
                 return "Successfully added character profile.";
             }
+        }
+        public string UpdateCharacterProfile(CharacterProfile profile)
+        {
+            CharacterProfile target = _characterProfiles.Find(cp => profile.Id == cp.Id);
+            target.Name = profile.Name;
+            target.Description = profile.Description;
+            //TODO: add exception handling, clean this up.
+            //TODO: overload Equals on CharacterProfile model so all changes to the model will not need to be reflected here also.
+            return "Profile successfully updated";
+        }
+
+        public string DeleteCharacterProfile(CharacterProfile profile)
+        {
+            CharacterProfile target = _characterProfiles.Find(cp => profile.Id == cp.Id);
+            string name = target.Name;
+            _characterProfiles.Remove(target);
+            //TODO: add exception handling, clean this up.
+            return string.Format("{0}'s profile successfully removed", name);
         }
     }
 }
