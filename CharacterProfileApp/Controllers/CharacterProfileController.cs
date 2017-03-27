@@ -11,22 +11,21 @@ namespace CharacterProfileApp.Controllers
 {
     public class CharacterProfileController : Controller
     {
-        private CharacterProfileRepository _characterProfileRepository = new CharacterProfileRepository();
 
         // GET: CharacterProfile
         public ActionResult Index()
         {
-            var charProfileList = _characterProfileRepository.GetCharacterProfiles();
+            var charProfileList = CharacterProfileRepository.GetCharacterProfiles();
             return View(charProfileList);
         }
 
         public ActionResult Detail(int? id)
         {
-            if(id == null || id >= _characterProfileRepository.GetCharacterProfiles().Count || id < 0)
+            if(id == null || id >= CharacterProfileRepository.GetCharacterProfiles().Count || id < 0)
             {
                 return HttpNotFound();
             }
-            var characterProfile = _characterProfileRepository.GetCharacterProfile((int)id);
+            var characterProfile = CharacterProfileRepository.GetCharacterProfile((int)id);
             
             return View(characterProfile);
 
@@ -38,7 +37,7 @@ namespace CharacterProfileApp.Controllers
         {
             ViewBag.Name = name; //assigning values to ViewBag to re-fill the form.
             ViewBag.Description = description;
-            _characterProfileRepository.AddCharacterProfile(new CharacterProfile { Name = name, Description = description });
+            CharacterProfileRepository.AddCharacterProfile(new CharacterProfile { Name = name, Description = description });
             return View();
         }
         public ActionResult New()
@@ -49,7 +48,7 @@ namespace CharacterProfileApp.Controllers
         [HttpPost]
         public ActionResult Edit(CharacterProfile profile) 
         {
-            var editStatus = _characterProfileRepository.UpdateCharacterProfile(profile);
+            var editStatus = CharacterProfileRepository.UpdateCharacterProfile(profile);
 
             ViewBag.EditStatus = editStatus;
 
@@ -62,7 +61,7 @@ namespace CharacterProfileApp.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            CharacterProfile profile = _characterProfileRepository.GetCharacterProfile((int)id);
+            CharacterProfile profile = CharacterProfileRepository.GetCharacterProfile((int)id);
 
             if (profile == null)
             {
@@ -78,7 +77,7 @@ namespace CharacterProfileApp.Controllers
         public ActionResult Delete(CharacterProfile profile)
         {
 
-            string message = _characterProfileRepository.DeleteCharacterProfile(profile);
+            string message = CharacterProfileRepository.DeleteCharacterProfile(profile);
 
             TempData["Message"] = message;
 
@@ -92,7 +91,7 @@ namespace CharacterProfileApp.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            CharacterProfile profile = _characterProfileRepository.GetCharacterProfile((int)id);
+            CharacterProfile profile = CharacterProfileRepository.GetCharacterProfile((int)id);
             if (profile == null)
             {
                 return HttpNotFound();

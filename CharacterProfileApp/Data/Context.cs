@@ -19,13 +19,13 @@ namespace CharacterProfileApp.Data
         {
             Database.SetInitializer(new DatabaseInitializer());
         }
-
+/*
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
 
         }
-
+*/
         internal int CharacterProfilesCount()
         {
             return CharacterProfiles.Count();

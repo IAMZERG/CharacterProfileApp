@@ -8,7 +8,7 @@ using System.Diagnostics;
 
 namespace CharacterProfileApp.Data
 {
-    public class CharacterProfileRepository
+    public static class CharacterProfileRepository
     {
 
         /*
@@ -106,7 +106,7 @@ namespace CharacterProfileApp.Data
 
 
         //mostly for sanity...  doin' this in every using statement does things to a person
-        public Context GetContext()
+        public static Context GetContext()
         {
             var context = new Context();
             context.Database.Log = (message) => Debug.WriteLine(message);
@@ -114,14 +114,14 @@ namespace CharacterProfileApp.Data
         }
 
 
-        public List<CharacterProfile> GetCharacterProfiles()
+        public static IList<CharacterProfile> GetCharacterProfiles()
         {
             using (Context context = GetContext())
             {
                 return context.CharacterProfiles.ToList();
             }
         }
-        public CharacterProfile GetCharacterProfile(int id)
+        public static CharacterProfile GetCharacterProfile(int id)
         {
 
             using (Context context = GetContext())
@@ -138,11 +138,11 @@ namespace CharacterProfileApp.Data
             }
         }
 
-        public string AddCharacterProfile(CharacterProfile charP)
+        public static string AddCharacterProfile(CharacterProfile charP)
         {
             using (Context context = GetContext())
             {
-                List<CharacterProfile> profiles = GetCharacterProfiles();
+                List<CharacterProfile> profiles = context.CharacterProfiles.ToList();
 
                 //TODO: Add validations like this in a more maintainable fashion
                 if (context.CharacterProfiles.Find(charP.Id).Name == charP.Name)
@@ -156,7 +156,7 @@ namespace CharacterProfileApp.Data
                 }
             }
         }
-        public string UpdateCharacterProfile(CharacterProfile profile)
+        public static string UpdateCharacterProfile(CharacterProfile profile)
         {
             using (Context context = GetContext())
             {
@@ -172,7 +172,7 @@ namespace CharacterProfileApp.Data
             }
         }
 
-        public string DeleteCharacterProfile(CharacterProfile profile)
+        public static string DeleteCharacterProfile(CharacterProfile profile)
         {
             using (Context context = GetContext())
             {

@@ -116,6 +116,10 @@ namespace CharacterProfileApp.Data
             andrew.AddStats(andrewStats);
             andrew.AddPosessions(andrewPosessions);
 
+            //aaaand... after 3 hours of crying and banging my keyboard and breakpoints everywhere, I realize my context doesn't have anything attached to it... YAAY
+            context.CharacterProfiles.Add(andrew);
+            context.CharacterProfiles.Add(bob);
+            context.CharacterProfiles.Add(mike);
             context.SaveChanges();
         }
     }
