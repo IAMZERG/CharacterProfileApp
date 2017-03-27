@@ -10,5 +10,6 @@ namespace CharacterProfileApp.Models
         public int Id { get; set; }
         public string AliasName { get; set; }
         public string Description { get; set; }
+        public int CharacterProfileId { get; set; }
     }
 }

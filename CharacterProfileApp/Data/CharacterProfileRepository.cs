@@ -2,12 +2,20 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Data.Entity;
 using CharacterProfileApp.Models;
+using System.Diagnostics;
 
 namespace CharacterProfileApp.Data
 {
     public class CharacterProfileRepository
     {
+
+        /*
+        /********************************************
+         * Leaving in as  a reference/for posterity *
+         * ******************************************
+
         private static List<CharacterProfile> _characterProfiles = new List<CharacterProfile>
         {
 
@@ -79,8 +87,7 @@ namespace CharacterProfileApp.Data
                 Aliases = new List<Models.Alias>
                 {
                     new Alias { Id = 0, AliasName = "Town Council President", Description = "Andrew is the Town Council President." },
-                    new Alias { Id = 1, AliasName = "Employee of the Month", Description = "Andrew works at his local grocer in his spare time, and was recently awarded employee of the month." },
-                    new Alias { Id = 2, AliasName = "Town Council Treasurer", Description = "Bob uses his skills with money to volunteer as the Town Council Treasurer." }
+                    new Alias { Id = 1, AliasName = "Employee of the Month", Description = "Andrew works at his local grocer in his spare time, and was recently awarded employee of the month." }
                 },
 
                 Posessions = new List<Models.Posession>
@@ -92,56 +99,88 @@ namespace CharacterProfileApp.Data
                 Description = "Andrew is a businessman, or at least he was.  Now he takes it easy working at the local grocery store and standing in as Town Council President."
             }
         };
+        */
+
+        
+
+
+
+        //mostly for sanity...  doin' this in every using statement does things to a person
+        public Context GetContext()
+        {
+            var context = new Context();
+            context.Database.Log = (message) => Debug.WriteLine(message);
+            return context;
+        }
+
 
         public List<CharacterProfile> GetCharacterProfiles()
         {
-            return _characterProfiles;
+            using (Context context = GetContext())
+            {
+                return context.CharacterProfiles.ToList();
+            }
         }
-
         public CharacterProfile GetCharacterProfile(int id)
         {
 
-            if (id < _characterProfiles.Count)
+            using (Context context = GetContext())
             {
-                return _characterProfiles.Find(cp => cp.Id == id);
-            }
-            else
-            {
-                return new CharacterProfile { Name = "The resource you are looking for is unavailable." };
+                if (id < context.CharacterProfilesCount())
+                {
+                    return context.CharacterProfiles.Find(id);
+                }
+                else
+                {
+                    return new CharacterProfile { Name = "The resource you are looking for could not be retrieved.  Please elect to try again or give up, whichever is most appropriate given the situation." };
 
+                }
             }
         }
 
         public string AddCharacterProfile(CharacterProfile charP)
         {
+            using (Context context = GetContext())
+            {
+                List<CharacterProfile> profiles = GetCharacterProfiles();
 
-            if(_characterProfiles.FirstOrDefault(cp => cp.Name == charP.Name) != null)
-            {
-                return "Failed to add character profile.  Character with that name already exists.";
-            }
-            else
-            {
-                _characterProfiles.Add(charP);
-                return "Successfully added character profile.";
+                //TODO: Add validations like this in a more maintainable fashion
+                if (context.CharacterProfiles.Find(charP.Id).Name == charP.Name)
+                {
+                    return "Failed to add character profile.  Character with that name already exists.";
+                }
+                else
+                {
+                    context.CharacterProfiles.Add(charP);
+                    return "Successfully added character profile.";
+                }
             }
         }
         public string UpdateCharacterProfile(CharacterProfile profile)
         {
-            CharacterProfile target = _characterProfiles.Find(cp => profile.Id == cp.Id);
-            target.Name = profile.Name;
-            target.Description = profile.Description;
-            //TODO: add exception handling, clean this up.
-            //TODO: overload Equals on CharacterProfile model so all changes to the model will not need to be reflected here also.
-            return "Profile successfully updated";
+            using (Context context = GetContext())
+            {
+                CharacterProfile target = context.CharacterProfiles.Find(profile.Id);
+                target.Name = profile.Name;
+                target.Description = profile.Description;
+
+                //TODO: add checks for changes on Stats, Posessions, and Aliases.  Make updates accordingly.
+                context.SaveChanges();
+                //TODO: add exception handling, clean this up.
+                //TODO: overload Equals on CharacterProfile model so all changes to the model will not need to be reflected here also.
+                return "Profile successfully updated";
+            }
         }
 
         public string DeleteCharacterProfile(CharacterProfile profile)
         {
-            CharacterProfile target = _characterProfiles.Find(cp => profile.Id == cp.Id);
-            string name = target.Name;
-            _characterProfiles.Remove(target);
-            //TODO: add exception handling, clean this up.
-            return string.Format("{0}'s profile successfully removed", name);
+            using (Context context = GetContext())
+            {
+                context.Entry(profile).State = EntityState.Deleted;
+                context.SaveChanges();
+                //TODO: add exception handling, clean this up.
+                return string.Format("Profile successfully removed");
+            }
         }
     }
 }

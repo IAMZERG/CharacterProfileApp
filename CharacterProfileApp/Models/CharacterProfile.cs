@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -15,7 +16,27 @@ namespace CharacterProfileApp.Models
         public string Description { get; set; }
 
 
+        public CharacterProfile()
+        {
+            Stats = new List<Stat> { };
+            Aliases = new List<Alias> { };
+            Posessions = new List<Posession> { };
+        }
+        //TODO: overload Equals operator?
+        public void AddStats(IList<Stat> stats)
+        {
+            Stats = (List<Stat>)stats;
+        }
+
+        public void AddAliases(IList<Alias> aliases)
+        {
+            Aliases = (List<Alias>)aliases;
+        }
+        public void AddPosessions(IList<Posession> posessions)
+        {
+            Posessions = (List<Posession>)posessions;
+        }
     }
-    //TODO: overload Equals operator?
+
 
 }
