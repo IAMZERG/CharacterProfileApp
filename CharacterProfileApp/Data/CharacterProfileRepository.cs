@@ -118,7 +118,10 @@ namespace CharacterProfileApp.Data
         {
             using (Context context = GetContext())
             {
-                return context.CharacterProfiles.ToList();
+                return context.CharacterProfiles
+                    .Include(cp => cp.Stats)
+                    .Include(cp => cp.Posessions)
+                    .Include(cp => cp.Aliases).ToList();
             }
         }
         public static CharacterProfile GetCharacterProfile(int id)
@@ -126,15 +129,8 @@ namespace CharacterProfileApp.Data
 
             using (Context context = GetContext())
             {
-                if (id < context.CharacterProfilesCount())
-                {
-                    return context.CharacterProfiles.Find(id);
-                }
-                else
-                {
-                    return new CharacterProfile { Name = "The resource you are looking for could not be retrieved.  Please elect to try again or give up, whichever is most appropriate given the situation." };
+                return context.CharacterProfiles.Find(id);
 
-                }
             }
         }
 

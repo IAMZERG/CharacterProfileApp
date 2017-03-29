@@ -21,7 +21,7 @@ namespace CharacterProfileApp.Controllers
 
         public ActionResult Detail(int? id)
         {
-            if(id == null || id >= CharacterProfileRepository.GetCharacterProfiles().Count || id < 0)
+            if(id == null || (int)id < 0)
             {
                 return HttpNotFound();
             }
