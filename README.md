@@ -7,7 +7,7 @@ An app to hold all your heroes, villains, etc. for D&amp;D, book ideas, games, a
 git clone https://github.com/IAMZERG/CharacterProfileApp
 ```
 2. Open the project in Visual Studio
-3. Download the needed dependences using the NuGet Package Manager (depending on version you have)
+3. Download the needed dependencies using the NuGet Package Manager (depending on version you have)
 ```
 c:\proj\app\> nuget restore
 c:\proj\app\> nuget.exe restore app.sln
