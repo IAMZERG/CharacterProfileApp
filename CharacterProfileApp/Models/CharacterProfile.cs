@@ -10,6 +10,7 @@ namespace CharacterProfileApp.Models
     {
         public int Id { get; set; }
         public string Name { get; set; }
+//TODO: make lookup properties virtual.  Get this working!!!
         public List<Stat> Stats { get; set; }
         public List<Alias> Aliases { get; set; }
         public List<Posession> Posessions { get; set; }
