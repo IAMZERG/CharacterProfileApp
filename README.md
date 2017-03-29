@@ -13,6 +13,6 @@ c:\proj\app\> nuget restore
 c:\proj\app\> nuget.exe restore app.sln
 c:\proj\> nuget restore app
 ```
-Or, for you lazy folks, go ahead and use the GUI...
+Or, for you lazy folks, go ahead and use the GUI.
 4. Press F5 to build and run the project.
 5. Enjoy!
