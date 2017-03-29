@@ -9,23 +9,8 @@
 
 <h4>@(@Model.Name)'s Stats</h4>
 
-<ul>
-    @foreach(var stat in Model.Stats)
-    {
-        <li>@stat.StatName @stat.Value</li>
-    }
-</ul>
-
-<h3>Posessions</h3>
-<hr />
-
-@foreach (var posession in Model.Posessions)
-{
-    <h4>@posession.Name</h4>
-    <p>@posession.Description</p>
-}
-@Html.ActionLink("Edit", "Edit", new { Model.Id })
-@Html.ActionLink("Delete", "Delete", new { Model.Id })
+<p>@Html.ActionLink("Edit", "Edit", new { Model.Id })</p>
+<p>@Html.ActionLink("Delete", "Delete", new { Model.Id })</p>
 
 
 
