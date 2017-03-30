@@ -21,7 +21,7 @@ namespace CharacterProfileApp.Controllers
 
         public ActionResult Detail(int? id)
         {
-            if(id == null || (int)id < 0)
+            if(id == null || (int)id < 0) // if id is null or less than zero:
             {
                 return HttpNotFound();
             }
@@ -57,6 +57,7 @@ namespace CharacterProfileApp.Controllers
         //DONE:  create edit method for the pre-send view-- i.e. the GET side of the equation 
         public ActionResult Edit(int? id)
         {
+        //TODO: Add try/catch handling, clean this up a bit
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -81,7 +82,7 @@ namespace CharacterProfileApp.Controllers
 
             TempData["Message"] = message;
 
-            return RedirectToAction("Index");
+            return RedirectToAction("Index"); //  Route: CharacterProfile/Index
         }
 
         public ActionResult Delete(int? id)

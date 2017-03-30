@@ -162,8 +162,7 @@ namespace CharacterProfileApp.Data
 
                 //TODO: add checks for changes on Stats, Posessions, and Aliases.  Make updates accordingly.
                 context.SaveChanges();
-                //TODO: add exception handling, clean this up.
-                //TODO: overload Equals on CharacterProfile model so all changes to the model will not need to be reflected here also.
+                //TODO: add exception handling, clean this up
                 return "Profile successfully updated";
             }
         }
